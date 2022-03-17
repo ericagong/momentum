@@ -7,15 +7,14 @@ let todos = [];
 function handleTodoSubmit(event) {
     event.preventDefault();
     const todoInput = todoForm.querySelector("input");
-    const newTodo = todoInput.value;
+    const newTodo = {
+        id: Date.now(),
+        text: todoInput.value
+    };
     todos.push(newTodo);
     displayTodoList(newTodo);
     saveTodo();
     todoInput.value = ""; // Empty todDoInput value.
-}
-
-function saveTodo(newTodo) {
-    localStorage.setItem(TODOS_KEY, JSON.stringify(todos)); // JSON.stringify saves todos in array format.
 }
 
 function handleDeleteTodo(event) {
@@ -23,12 +22,24 @@ function handleDeleteTodo(event) {
     targetLi.remove();
 }
 
+function saveTodo() {
+    localStorage.setItem(TODOS_KEY, JSON.stringify(todos)); // JSON.stringify saves todos in array format.
+}
+
+function deleteTodo() {
+    
+}
+
 function displayTodoList(newTodo) {
     const newLi = document.createElement("li");
     const newSpan = document.createElement("span");
     const newButton = document.createElement("button");
 
-    newSpan.innerText = newTodo;
+    const todoText = newTodo.text;
+    const todoID = newTodo.id;
+    
+    newLi.id = todoID;
+    newSpan.innerText = todoText;
     newButton.innerText = "X";
     newButton.addEventListener("click", handleDeleteTodo);
 

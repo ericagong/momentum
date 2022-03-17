@@ -13,22 +13,21 @@ function handleTodoSubmit(event) {
     };
     todos.push(newTodo);
     displayTodoList(newTodo);
-    saveTodo();
+    saveTodos();
     todoInput.value = ""; // Empty todDoInput value.
 }
 
 function handleDeleteTodo(event) {
     const targetLi = event.target.parentElement; //event.target.parentElement shows parent element of clicked button.
     targetLi.remove();
+    todos = todos.filter(todo => todo.id !== parseInt(targetLi.id)); // arr.filter(Filter) only returns if arr item with true return value.
+    saveTodos()
 }
 
-function saveTodo() {
+function saveTodos() {
     localStorage.setItem(TODOS_KEY, JSON.stringify(todos)); // JSON.stringify saves todos in array format.
 }
 
-function deleteTodo() {
-    
-}
 
 function displayTodoList(newTodo) {
     const newLi = document.createElement("li");
